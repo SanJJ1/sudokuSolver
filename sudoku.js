@@ -1,5 +1,19 @@
-// alert( 'Hello, world!' );
+// import Tesseract from 'tesseract.js';
 
+
+
+function recognizeText(f) {
+    document.body.append('in progress...\n')
+    document.body.append(document.createElement('br'));
+    Tesseract.recognize(
+    f,// 'https://tesseract.projectnaptha.com/img/eng_bw.png',
+    'eng',
+    { logger: m => console.log(m) }
+    ).then(({ data: { text } }) => {
+        document.body.append(text);
+    // console.log(text);
+    })
+}
 
 function dropHandler(ev) {
   console.log('File(s) dropped');
@@ -13,6 +27,7 @@ function dropHandler(ev) {
       // If dropped items aren't files, reject them
       if (ev.dataTransfer.items[i].kind === 'file') {
         var file = ev.dataTransfer.items[i].getAsFile();
+        recognizeText(file);
         console.log('... file[' + i + '].name = ' + file.name);
       }
     }
@@ -23,7 +38,6 @@ function dropHandler(ev) {
     }
   }
 }
-
 
 function dragOverHandler(ev) {
   console.log('File(s) in drop zone');

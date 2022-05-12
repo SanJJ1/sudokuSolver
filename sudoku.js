@@ -1,19 +1,5 @@
-// import Tesseract from 'tesseract.js';
+// alert( 'Hello, world!' );
 
-
-
-function recognizeText(f) {
-    document.body.append('in progress...\n')
-    document.body.append(document.createElement('br'));
-    Tesseract.recognize(
-    f,// 'https://tesseract.projectnaptha.com/img/eng_bw.png',
-    'eng',
-    { logger: m => console.log(m) }
-    ).then(({ data: { text } }) => {
-        document.body.append(text);
-    // console.log(text);
-    })
-}
 
 function dropHandler(ev) {
   console.log('File(s) dropped');
@@ -27,15 +13,16 @@ function dropHandler(ev) {
       // If dropped items aren't files, reject them
       if (ev.dataTransfer.items[i].kind === 'file' && (ev.dataTransfer.items[i].type.match('^image/'))) {
         var file = ev.dataTransfer.items[i].getAsFile();
-        recognizeText(file);
         console.log('... file[' + i + '].name = ' + file.name);
         // processImg(file)
 
         const img = document.createElement("img");
         img.src = URL.createObjectURL(file);
-        img.height = 600, img.width = 600;
+        img.height = 600, img.width = 600; // Fix image resizing
 
+        // Placed Canvas under tester div to see how image changed
         const div = document.getElementById("tester");
+
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
         canvas.width = img.width;
@@ -46,7 +33,6 @@ function dropHandler(ev) {
         }
 
         div.appendChild(canvas);
-        console.log(ctx);
 
       }
     }
@@ -58,12 +44,12 @@ function dropHandler(ev) {
   }
 }
 
+
 function dragOverHandler(ev) {
   console.log('File(s) in drop zone');
 
   // Prevent default behavior (Prevent file from being opened)
   ev.preventDefault();
-<<<<<<< HEAD
 }
 
 
@@ -79,6 +65,3 @@ function processImg(file) {
 
   console.log('Finished Processing');
 }
-=======
-}
->>>>>>> c4d90955f1f499bcbffeb9330600b85a74bae7f8
